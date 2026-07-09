@@ -1,131 +1,223 @@
+// _archetype-library/hero-e-testimonial/Component.tsx
+//
+// Hero E: Testimonial — left copy, right large review quote card.
+// Dominant quote + star rating + author photo or initials avatar.
 'use client';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useMemo } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import { PhoneIcon, ChevronIcon, CheckIcon, StarIcon } from './_shared/icons';
 import styles from './styles.module.scss';
 
-// ── Particle canvas ───────────────────────────────────────────────────────────
-function ParticleCanvas() {
-  const ref = useRef<HTMLCanvasElement>(null);
-  useEffect(() => {
-    const canvas = ref.current; if (!canvas) return;
-    const ctx = canvas.getContext('2d'); if (!ctx) return;
-    const resize = () => { canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight; };
-    resize(); window.addEventListener('resize', resize);
-    const pts = Array.from({ length: 38 }, () => ({
-      x: Math.random() * canvas.width, y: Math.random() * canvas.height,
-      r: Math.random() * 5 + 0.5, vx: (Math.random() - 0.5) * 3,
-      vy: Math.random() * 0.25 + 0.06, o: Math.random() * 0.35 + 0.7,
-      flake: Math.random() > 0.3,
-    }));
-    let raf: number;
-    const draw = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      pts.forEach(p => {
-        ctx.save(); ctx.globalAlpha = p.o;
-        if (p.flake) {
-          ctx.strokeStyle = '#ca8a04'; ctx.lineWidth = 0.6;
-          ctx.translate(p.x, p.y);
-          for (let i = 0; i < 6; i++) { ctx.rotate(Math.PI / 3); ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(0, p.r * 3.2); ctx.stroke(); }
-        } else { ctx.fillStyle = '#ca8a04'; ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill(); }
-        ctx.restore();
-        p.x += p.vx; p.y += p.vy;
-        if (p.y > canvas.height + 10) { p.y = -10; p.x = Math.random() * canvas.width; }
-        if (p.x < -10) p.x = canvas.width + 10;
-        if (p.x > canvas.width + 10) p.x = -10;
-      });
-      raf = requestAnimationFrame(draw);
-    };
-    draw();
-    return () => { cancelAnimationFrame(raf); window.removeEventListener('resize', resize); };
-  }, []);
-  return <canvas ref={ref} className={styles.particleCanvas} aria-hidden="true" />;
+function initialsFromName(name: string): string {
+  const parts = name.trim().split(/\s+/).filter(Boolean);
+  if (parts.length === 0) return '?';
+  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
 }
 
-// ── Work meter ────────────────────────────────────────────────────────────────
-function TempMeter() {
-  const [fill, setFill] = useState(0);
-  useEffect(() => { const t = setTimeout(() => setFill(88), 750); return () => clearTimeout(t); }, []);
+function TestimonialCard({
+  quote,
+  authorName,
+  authorMeta,
+  authorImageSrc,
+  rating = 5,
+}: {
+  quote: string;
+  authorName: string;
+  authorMeta: string;
+  authorImageSrc?: string;
+  rating?: number;
+}) {
+  const stars = useMemo(() => {
+    const n = Math.min(5, Math.max(1, Math.round(rating)));
+    return Array.from({ length: 5 }, (_, i) => i < n);
+  }, [rating]);
+
+  const initials = useMemo(() => initialsFromName(authorName), [authorName]);
+
   return (
-    <div className={styles.thermo} aria-hidden="true">
-      <div className={styles.thermoColumn}>
-        <div className={styles.thermoTube}>
-          <motion.div
-            className={styles.thermoFill}
-            initial={{ height: '0%' }}
-            animate={{ height: `${fill}%` }}
-            transition={{ duration: 2.0, delay: 0.85, ease: [0.34, 1.2, 0.64, 1] }}
+    <figure className={styles.card}>
+      <div className={styles.cardGlow} aria-hidden="true" />
+      <span className={styles.quoteMark} aria-hidden="true">
+        &ldquo;
+      </span>
+
+      <div className={styles.stars} role="img" aria-label={`${Math.min(5, Math.max(1, Math.round(rating)))} out of 5 stars`}>
+        {stars.map((filled, i) => (
+          <span key={i} className={filled ? styles.starOn : styles.starOff}>
+            <StarIcon size={18} filled={filled} />
+          </span>
+        ))}
+      </div>
+
+      <blockquote className={styles.quote}>
+        <p>{quote}</p>
+      </blockquote>
+
+      <figcaption className={styles.author}>
+        {authorImageSrc ? (
+          <img
+            src={authorImageSrc}
+            alt=""
+            className={styles.avatarImg}
+            width={48}
+            height={48}
           />
+        ) : (
+          <span className={styles.avatarFallback} aria-hidden="true">
+            {initials}
+          </span>
+        )}
+        <div className={styles.authorText}>
+          <cite className={styles.authorName}>{authorName}</cite>
+          <span className={styles.authorMeta}>{authorMeta}</span>
         </div>
-        <div className={styles.thermoBulb} />
-      </div>
-      <div className={styles.thermoLabels}>
-        <span className={styles.thermoTop}>Done Right</span>
-        <span className={styles.thermoMid}>Waco, TX</span>
-        <span className={styles.thermoBot}>To-Do List</span>
-      </div>
-    </div>
+      </figcaption>
+    </figure>
   );
 }
 
-const CHIPS = ['Same-Day Available', 'No Contracts', 'Background-Checked', 'Since 2015', '1-Year Warranty'];
-
 export default function WelcomePage() {
+const badgeText = 'Waco\'s Most Trusted Handyman — Since 2015';
+const headlineLines = [
+  'Reliable Repairs.',
+  'No Job Too Small.',
+];
+const headlineAccent = 'RightFix.';
+const subheadline = 'Flat-rate pricing. Background-checked pros. 1-Year Workmanship Warranty. Serving Waco and Central Texas — from honey-do lists to drywall and mounting.';
+const primaryCta = { label: 'Call (254) 800-9900', href: 'tel:+12548009900' };
+const secondaryCta = { label: 'Free Estimate', href: '/contact' };
+const chips = [
+  'Same-Day Available',
+  'No Contracts',
+  'Background-Checked',
+  'Since 2015',
+  '1-Year Warranty',
+];
+const stats = [
+  {
+    "value": "9,000+",
+    "label": "Jobs Completed"
+  },
+  {
+    "value": "4.9 ★",
+    "label": "Google Rating"
+  },
+  {
+    "value": "1-Year",
+    "label": "Workmanship Warranty"
+  },
+  {
+    "value": "Same-Day",
+    "label": "Service Available"
+  }
+];
+const meterTarget = 72;
+const meterTopLabel = "Peak";
+const meterMidLabel = "Local";
+const meterBotLabel = "Base";
+const particleColor = '#f97316';
+const beforeImageSrc = '/pages/home/welcome/before.jpg';
+const afterImageSrc = '/pages/home/welcome/after.jpg';
+const beforeLabel = "Backlog";
+const afterLabel = "Checked off";
+const mapCenterLabel = 'Service HQ';
+const mapPins = [
+  { label: 'Waco', x: 42, y: 48 },
+  { label: 'Temple', x: 68, y: 62 },
+  { label: 'Killeen', x: 58, y: 72 },
+];
+const coverageLabel = 'Central Texas coverage';
+const materials = [
+  { name: "Mounts", swatch: "#f59e0b", imageSrc: "/pages/home/welcome/mat-1.jpg" },
+  { name: "Doors", swatch: "#fbbf24", imageSrc: "/pages/home/welcome/mat-2.jpg" },
+  { name: "Caulk/Paint", swatch: "#d97706", imageSrc: "/pages/home/welcome/mat-3.jpg" },
+  { name: "Fixtures", swatch: "#fcd34d", imageSrc: "/pages/home/welcome/mat-1.jpg" },
+  { name: "Deck Fix", swatch: "#b45309", imageSrc: "/pages/home/welcome/mat-2.jpg" },
+  { name: "Odd Jobs", swatch: "#92400e", imageSrc: "/pages/home/welcome/mat-3.jpg" }
+];
+const quote = "Three visits cleared a year of little problems. Showed up with the right tools every time.";
+const authorImageSrc = undefined as string | undefined;
+const authorName = "Greg & Ann";
+const authorMeta = "Punch list · Waco";
+const rating = 5;
+const schematicLabel = "RightFix schematic";
+const gauges = [
+  { label: "Jobs", value: "7,100+" },
+  { label: "Rating", value: "4.9 ★" },
+  { label: "Min hours", value: "Clear" },
+  { label: "Insured", value: "Yes" }
+];
+const toggles = [
+  { label: "Licensed crew", on: true },
+  { label: "Same-week", on: true },
+  { label: "Warrantied", on: true }
+];
+const textureSrc = '/pages/home/welcome/hero-main.jpg';
+const textureAlt = 'Texture';
+const accentWord = "RightFix";
+
   return (
     <section className={styles.hero} aria-label="Hero">
-      <ParticleCanvas />
       <div className={styles.shard} aria-hidden="true" />
 
       <div className={styles.layout}>
-
         <div className={styles.content}>
-          <motion.div className={styles.badge}
-            initial={{ opacity: 0, y: -12 }} animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}>
+          <motion.div
+            className={styles.badge}
+            initial={{ opacity: 0, y: -12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
             <span className={styles.badgeDot} />
-            Waco&apos;s Most Trusted Handyman — Since 2015
+            {badgeText}
           </motion.div>
 
-          <motion.h1 className={styles.headline}
-            initial={{ opacity: 0, y: 22 }} animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}>
-            Reliable Repairs.<br />No Job Too Small.<br />
-            <span className={styles.accentLine}>RightFix.</span>
+          <motion.h1
+            className={styles.headline}
+            initial={{ opacity: 0, y: 22 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >
+            {headlineLines.map((line, i) => (
+              <React.Fragment key={i}>{line}<br /></React.Fragment>
+            ))}
+            <span className={styles.accentLine}>{headlineAccent}</span>
           </motion.h1>
 
-          <motion.p className={styles.sub}
-            initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, delay: 0.22 }}>
-            Flat-rate pricing. Background-checked pros. 1-Year Workmanship Warranty.
-            Serving Waco and Central Texas — from honey-do lists to drywall and mounting.
+          <motion.p
+            className={styles.sub}
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.55, delay: 0.22 }}
+          >
+            {subheadline}
           </motion.p>
 
-          <motion.div className={styles.ctaRow}
-            initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.34 }}>
-            <a href="tel:+12548009900" className={styles.ctaPrimary}>
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.17 12a19.79 19.79 0 0 1-3.07-8.63A2 2 0 0 1 3.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-              </svg>
-              Call (254) 800-9900
+          <motion.div
+            className={styles.ctaRow}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.34 }}
+          >
+            <a href={primaryCta.href} className={styles.ctaPrimary}>
+              <PhoneIcon size={15} /> {primaryCta.label}
             </a>
-            <Link href="/contact" className={styles.ctaSecondary}>
-              Free Estimate
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-                <polyline points="9 18 15 12 9 6"/>
-              </svg>
+            <Link href={secondaryCta.href} className={styles.ctaSecondary}>
+              {secondaryCta.label} <ChevronIcon size={12} />
             </Link>
           </motion.div>
 
-          <motion.div className={styles.chips}
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.48 }}>
-            {CHIPS.map(c => (
+          <motion.div
+            className={styles.chips}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.48 }}
+          >
+            {chips.map((c) => (
               <span key={c} className={styles.chip}>
-                <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round">
-                  <polyline points="20 6 9 17 4 12"/>
-                </svg>
-                {c}
+                <CheckIcon size={9} /> {c}
               </span>
             ))}
           </motion.div>
@@ -133,48 +225,17 @@ export default function WelcomePage() {
 
         <motion.div
           className={styles.visual}
-          initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, x: 30, y: 12 }}
+          animate={{ opacity: 1, x: 0, y: 0 }}
           transition={{ duration: 0.7, delay: 0.28, ease: 'easeOut' }}
-          aria-hidden="true"
         >
-          <motion.div className={styles.bgFlake}
-            animate={{ rotate: 360 }}
-            transition={{ duration: 65, repeat: Infinity, ease: 'linear' }}>
-            <svg width="420" height="420" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="0.3" strokeLinecap="round">
-              <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
-            </svg>
-          </motion.div>
-
-          <motion.div className={`${styles.statCard} ${styles.sc1}`}
-            initial={{ opacity: 0, y: -10, scale: 0.9 }} animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ delay: 1.05, type: 'spring', stiffness: 240, damping: 18 }}>
-            <span className={styles.scNum}>9,000+</span>
-            <span className={styles.scLbl}>Jobs Completed</span>
-          </motion.div>
-
-          <motion.div className={`${styles.statCard} ${styles.sc2}`}
-            initial={{ opacity: 0, y: -10, scale: 0.9 }} animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ delay: 1.2, type: 'spring', stiffness: 240, damping: 18 }}>
-            <span className={styles.scNum}>4.9 ★</span>
-            <span className={styles.scLbl}>Google Rating</span>
-          </motion.div>
-
-          <TempMeter />
-
-          <motion.div className={`${styles.statCard} ${styles.sc3}`}
-            initial={{ opacity: 0, y: 10, scale: 0.9 }} animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ delay: 1.35, type: 'spring', stiffness: 240, damping: 18 }}>
-            <span className={styles.scNum}>1-Year</span>
-            <span className={styles.scLbl}>Workmanship Warranty</span>
-          </motion.div>
-
-          <motion.div className={`${styles.statCard} ${styles.sc4} ${styles.scOrange}`}
-            initial={{ opacity: 0, y: 10, scale: 0.9 }} animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ delay: 1.5, type: 'spring', stiffness: 240, damping: 18 }}>
-            <span className={styles.scNum}>Same-Day</span>
-            <span className={styles.scLbl}>Service Available</span>
-          </motion.div>
-
+          <TestimonialCard
+            quote={quote}
+            authorName={authorName}
+            authorMeta={authorMeta}
+            authorImageSrc={authorImageSrc}
+            rating={rating}
+          />
         </motion.div>
       </div>
     </section>

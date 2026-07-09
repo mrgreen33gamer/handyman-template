@@ -35,36 +35,42 @@ export default function HomePage() {
       title: "General Home Repairs",
       body: "Faucets, outlets, trim, hardware, and the everyday fixes that keep a house working — done right the first time.",
       link: "/services/general-repairs",
+      image: "/pages/home/services/service-1.jpg",
     },
     {
       icon: faBorderAll,
       title: "Drywall Patching",
       body: "Holes, cracks, water damage, and texture match so walls look whole again before paint day.",
       link: "/services/drywall-patching",
+      image: "/pages/home/services/service-2.jpg",
     },
     {
       icon: faDoorOpen,
       title: "Door & Window Fixes",
       body: "Sticky doors, loose hinges, weatherstripping, latches, and hardware — smoother operation and fewer drafts.",
       link: "/services/door-window-fixes",
+      image: "/pages/home/services/service-3.jpg",
     },
     {
       icon: faTv,
       title: "TV Mounting & Assembly",
       body: "Secure TV mounts, furniture assembly, shelves, and wall anchors — level, stud-safe, and cable-clean.",
       link: "/services/mounting-assembly",
+      image: "/pages/home/services/service-4.jpg",
     },
     {
       icon: faBrush,
       title: "Caulking & Weatherproofing",
       body: "Tub surrounds, windows, exterior gaps, and door thresholds sealed against moisture and Texas heat.",
       link: "/services/caulking-weatherproofing",
+      image: "/pages/home/services/service-1.jpg",
     },
     {
       icon: faClipboardList,
       title: "Honey-Do Lists",
       body: "Batch your small projects into one visit — we knock out the list efficiently with flat-rate pricing.",
       link: "/services/honey-do-lists",
+      image: "/pages/home/services/service-2.jpg",
     },
   ];
 
@@ -180,13 +186,10 @@ export default function HomePage() {
 
   return (
     <main className={styles.pageWrapper}>
-
       <WelcomePage />
-
       <TrustBar
         headline="Waco's trusted handyman — background-checked, insured, and warrantied on every job"
       />
-
       <div className={styles.section}>
         <ServiceCardComponent
           heading="Home Repairs Done Right"
@@ -194,56 +197,46 @@ export default function HomePage() {
           cards={services}
         />
       </div>
-
       <div className={styles.section}>
         <ImpactMetrics metrics={metrics} cityName="Waco" />
       </div>
-
       <div className={styles.section}>
         <WhyChooseUs cityName="Waco" features={whyFeatures} />
       </div>
-
       <div className={styles.section}>
         <ProcessTimeline steps={processSteps} />
       </div>
-
-      <div className={styles.section}>
-        <WhatToExpect expectations={expectations} />
-      </div>
-
-      <div className={styles.section}>
-        <GuaranteeSection />
-      </div>
-
       <div className={styles.section}>
         <Testimonials testimonials={reviews} />
       </div>
-
+      <CTABanner
+        headline="The Honey-Do List, Handled."
+        subline="Mounts, repairs, small installs, and punch lists — skilled handymen with clear hourly or flat options."
+        primaryText="Call (254) 800-9900"
+        primaryLink="tel:+12548009900"
+        secondaryText="Book a Handyman"
+        secondaryLink="/contact"
+      
+        imageSrc="/pages/home/welcome/hero-main.jpg"
+       />
+      <div className={styles.section}>
+        <GuaranteeSection />
+      </div>
       <div className={styles.section}>
         <LocalServiceAreas cityName="Waco" areas={localAreas} />
       </div>
-
+      <div className={styles.section}>
+        <WhatToExpect expectations={expectations} />
+      </div>
       <div className={styles.section}>
         <FAQ cityName="Waco" faq={faq} title="Handyman Service FAQs" />
       </div>
-
       <div className={styles.section}>
         <BlogPreviewGrid />
       </div>
-
-      <CTABanner
-        headline="Ready to Knock Out That List?"
-        subline="Flat-rate quotes. Background-checked pros. Call (254) 800-9900."
-        primaryText="Call (254) 800-9900"
-        primaryLink="tel:+12548009900"
-        secondaryText="Book Online"
-        secondaryLink="/contact"
-      />
-
       <div className={styles.section}>
         <Variant4 title="Request a Free Estimate" cityName="Waco" slug="home" spot="home-form" formVariant={4} />
       </div>
-
     </main>
   );
 }

@@ -19,7 +19,7 @@ const ALL_POSTS: BlogPost[] = [
     category: 'Guides',
     date:     'July 3, 2026',
     readTime: 7,
-    imageSrc: '/pages/blogs/energy-savings.jpg',
+    imageSrc: '/pages/home/welcome/after.jpg',
     imageAlt: 'Handyman vs contractor decision guide for Texas homeowners',
     featured: true,
   },
@@ -30,7 +30,7 @@ const ALL_POSTS: BlogPost[] = [
     category: 'Maintenance',
     date:     'June 24, 2026',
     readTime: 6,
-    imageSrc: '/pages/blogs/maintenance-plan.jpg',
+    imageSrc: '/pages/home/services/service-3.jpg',
     imageAlt: 'Seasonal home maintenance checklist for Central Texas',
   },
   {
@@ -40,7 +40,7 @@ const ALL_POSTS: BlogPost[] = [
     category: 'Repairs',
     date:     'June 15, 2026',
     readTime: 8,
-    imageSrc: '/pages/blogs/ac-replacement.jpg',
+    imageSrc: '/pages/home/welcome/hero-main.jpg',
     imageAlt: 'Drywall patch and prep tips before painting in Waco TX',
   },
 ];
