@@ -332,3 +332,28 @@
 }
 
 /* end identity layer */
+
+/* === HERO PATTERN UNIQUENESS — handyman-template === */
+.hero {
+  &::before {
+    content: '' !important;
+    position: absolute !important;
+    inset: 0 !important;
+    background-image: repeating-linear-gradient(-62deg, transparent 0 18px, rgba($orange, 0.025) 18px 19px),
+      repeating-linear-gradient(62deg, transparent 0 18px, rgba($white, 0.018) 18px 19px) !important;
+    background-size: auto !important;
+    opacity: 0.61 !important;
+    pointer-events: none !important;
+    z-index: 0 !important;
+  }
+
+  &::after {
+    content: '' !important;
+    position: absolute !important;
+    inset: 0 !important;
+    background-image: radial-gradient(ellipse 50% 40% at 49% 32%, rgba($orange, 0.045), transparent 70%), radial-gradient(ellipse 40% 50% at 73% 51%, rgba($white, 0.03), transparent 65%) !important;
+    pointer-events: none !important;
+    z-index: 0 !important;
+  }
+}
+/* end hero pattern */
