@@ -23,32 +23,32 @@ const AboutStory: React.FC<AboutStoryProps> = ({ cityName }) => {
         <div className={styles.storyBody}>
           <div className={styles.storyPull}>
             <p className={styles.pullQuote}>
-              "We started Arctic Air because we were tired of watching homeowners get ripped off by fly-by-night HVAC contractors."
+              &quot;We started RightFix because homeowners were tired of waiting weeks for simple repairs — or getting overcharged for work that should be straightforward.&quot;
             </p>
             <div className={styles.pullAttrib}>
-              <span className={styles.pullName}>— Mike Hawkins</span>
-              <span className={styles.pullTitle}>Founder, Arctic Air HVAC</span>
+              <span className={styles.pullName}>— Sam Ortiz</span>
+              <span className={styles.pullTitle}>Founder, RightFix Handyman</span>
             </div>
           </div>
 
           <div className={styles.storyText}>
             <p className={styles.storyParagraph}>
-              Founded in 2010 in Waco, TX, Arctic Air HVAC started with one truck and one principle:
-              give homeowners the straight story about their system, charge a fair price, and back the
+              Founded in 2015 in Waco, TX, RightFix Handyman started with one truck and one principle:
+              give homeowners the straight story about their repairs, charge a fair price, and back the
               work with a real warranty. No hourly billing surprises, no upsell pressure, no contracts.
             </p>
             <p className={styles.storyParagraph}>
               Today we proudly serve <strong>{cityName}</strong> and every surrounding community —
-              from China Spring to Killeen — with a crew of NATE-certified, TDLR-licensed technicians
+              from China Spring to Killeen — with a crew of background-checked pros
               who live and work right here in Central Texas.
             </p>
 
             <div className={styles.milestones}>
               {[
-                { year: '2010', label: 'Founded in Waco' },
-                { year: '2014', label: 'Expanded to 5 techs' },
-                { year: '2018', label: '1,000 customers served' },
-                { year: '2024', label: '2,400+ systems serviced' },
+                { year: '2015', label: 'Founded in Waco' },
+                { year: '2018', label: 'Expanded crew' },
+                { year: '2021', label: '5,000 jobs completed' },
+                { year: '2026', label: '9,000+ jobs completed' },
               ].map((m, i) => (
                 <div key={i} className={styles.milestone}>
                   <span className={styles.milestoneYear}>{m.year}</span>
