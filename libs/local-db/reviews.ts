@@ -1,8 +1,5 @@
 // libs/local-db/reviews.ts
-// ─────────────────────────────────────────────────────────────────────────────
-// Static testimonials for Arctic Air HVAC — used by Testimonials component,
-// schema markup, and aggregate rating in layout.tsx.
-// ─────────────────────────────────────────────────────────────────────────────
+// Static testimonials for RightFix Handyman
 
 export interface Review {
   name:     string;
@@ -19,64 +16,64 @@ const reviews: Review[] = [
     location: 'Waco, TX',
     rating:   5,
     date:     'March 2026',
-    service:  'AC Replacement',
-    text:     "Our old unit finally gave out in the middle of a Texas summer. Arctic Air had a new system installed within 48 hours. The tech explained everything clearly, pricing was upfront, and the house has never been this comfortable. I can't recommend them enough.",
+    service:  'Honey-Do Lists',
+    text:     "Had a list of 12 small fixes sitting for months. RightFix knocked them out in one visit — doors, caulk, a shelf, and a leaky faucet. Flat-rate quote, clean work, and my wife is thrilled. Sam's crew is solid.",
   },
   {
     name:     'Sandra K.',
     location: 'Hewitt, TX',
     rating:   5,
     date:     'February 2026',
-    service:  'Heating Repair',
-    text:     'Woke up at 6am to a cold house with the heater completely out. Called Arctic Air and they had someone at my door by 9am. Fixed the same day, fair price. This is the kind of service you tell your neighbors about.',
+    service:  'Drywall Patching',
+    text:     'Kids put two big holes in the hallway. RightFix patched, textured to match, and left it paint-ready. You cannot tell anything happened. Fair price and on time.',
   },
   {
     name:     'James R.',
     location: 'Woodway, TX',
     rating:   5,
     date:     'January 2026',
-    service:  'Annual Maintenance Plan',
-    text:     'Been on their maintenance plan for two years now. They come out twice a year, always on time, always thorough. Caught a refrigerant issue last fall before it became a $3,000 emergency. The plan pays for itself every single year.',
+    service:  'TV Mounting & Assembly',
+    text:     'Mounted a 75\" TV, assembled a media console, and hid the cables. Perfectly level, stud-safe, and they cleaned up every scrap. This is my go-to handyman now.',
   },
   {
     name:     'Patricia L.',
-    location: 'Robinson, TX',
+    location: 'Temple, TX',
     rating:   5,
     date:     'December 2025',
-    service:  'New Installation',
-    text:     'Had three companies quote us. Arctic Air was honest about what size system we actually needed — not just upselling the biggest unit. The install was clean, fast, and our energy bill dropped by almost 30% the first month.',
+    service:  'Caulking & Weatherproofing',
+    text:     'Tub surround and exterior window gaps sealed properly. No more drafts or moisture issues. Honest advice instead of trying to sell a full remodel.',
   },
   {
     name:     'David M.',
-    location: 'China Spring, TX',
+    location: 'Killeen, TX',
     rating:   5,
     date:     'November 2025',
-    service:  'Duct Cleaning',
-    text:     'We had duct cleaning done before winter and the difference in air quality was immediate. My wife has allergies and she said it was the best she\'d breathed indoors in years. Great crew, very professional, left the house spotless.',
+    service:  'Door & Window Fixes',
+    text:     'Front door would not latch and two windows stuck every summer. RightFix adjusted hinges, replaced weatherstripping, and everything works smoothly. Worth every penny.',
   },
   {
     name:     'Angela W.',
-    location: 'Temple, TX',
+    location: 'China Spring, TX',
     rating:   5,
     date:     'October 2025',
-    service:  'AC Repair',
-    text:     'AC went down on a Friday afternoon. I expected to wait all weekend but they came out Friday evening, diagnosed the problem fast, and had the part the next morning. No after-hours gouge either — totally fair rate. My new HVAC company for life.',
+    service:  'General Home Repairs',
+    text:     'Ceiling fan swap, closet rod, and a few outlet covers — all done in one afternoon. Background-checked, respectful of the house, and the warranty gives peace of mind.',
   },
   {
     name:     'Robert H.',
-    location: 'Killeen, TX',
+    location: 'Bellmead, TX',
     rating:   5,
     date:     'September 2025',
-    service:  'Smart Thermostat Install',
-    text:     'Got a Nest installed and properly configured by Arctic Air. They set up the schedule for our family and showed us how to use the app. The tech was patient and knowledgeable — didn\'t feel rushed at all. Highly recommend.',
+    service:  'Property Management',
+    text:     'We use RightFix for make-ready repairs across our rental units. Fast turnaround, consistent quality, and one invoice that property managers actually understand.',
   },
   {
     name:     'Cheryl B.',
-    location: 'Waco, TX',
+    location: 'McGregor, TX',
     rating:   5,
     date:     'August 2025',
-    service:  'Emergency Repair',
-    text:     'Called them at 10pm on a 102-degree day when our AC died. They answered immediately, had someone out within the hour, and fixed it that night. I have two small kids at home — this company genuinely saved us. Thank you.',
+    service:  'Honey-Do Lists',
+    text:     'Finally got through the honey-do list my husband had been ignoring for a year. RightFix was professional, priced fairly, and finished everything in one day. 1-Year Workmanship Warranty sealed the deal.',
   },
 ];
 
