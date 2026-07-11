@@ -63,14 +63,14 @@ export default function HomePage() {
       title: "Caulking & Weatherproofing",
       body: "Tub surrounds, windows, exterior gaps, and door thresholds sealed against moisture and Texas heat.",
       link: "/services/caulking-weatherproofing",
-      image: "/pages/home/services/service-1.jpg",
+      image: "/pages/home/welcome/before.jpg",
     },
     {
       icon: faClipboardList,
       title: "Honey-Do Lists",
       body: "Batch your small projects into one visit — we knock out the list efficiently with flat-rate pricing.",
       link: "/services/honey-do-lists",
-      image: "/pages/home/services/service-2.jpg",
+      image: "/pages/home/welcome/after.jpg",
     },
   ];
 

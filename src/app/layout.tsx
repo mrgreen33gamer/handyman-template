@@ -118,7 +118,7 @@ export const metadata: Metadata = {
     siteName: "RightFix Handyman",
     images: [
       {
-        url: `${BASE_URL}/logos/scott-apps-banner.png?v=1`,
+        url: `${BASE_URL}/pages/home/welcome/hero-main.jpg`,
         width: 1200,
         height: 630,
         alt: "RightFix Handyman — Waco TX Home Repairs",
@@ -132,7 +132,7 @@ export const metadata: Metadata = {
     title: "RightFix Handyman | Waco TX Home Repairs",
     description:
       "General repairs, drywall, mounting & honey-do lists for Central Texas. Background-checked pros — bonded & insured.",
-    images: [`${BASE_URL}/logos/scott-apps-banner.png?v=1`],
+    images: [`${BASE_URL}/pages/home/welcome/hero-main.jpg`],
   },
   robots: {
     index: true,
